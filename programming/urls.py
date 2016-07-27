@@ -13,13 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import include, url
 from django.contrib import admin
-from blog import views
+from django.shortcuts import redirect
 from pockemongo import views as pockemongo_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^pokemon/$', pockemongo_views.pockmon_list),
-    url(r'^$', views.post_list),
+    url(r'^blog/$', include('blog.urls', namespace='blog')),
+    url(r'^$', lambda request: redirect('/blog/'))
 ]
