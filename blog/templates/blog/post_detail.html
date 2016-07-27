@@ -6,6 +6,24 @@
         {{ post.title }} <br/>
         {{ post.content }} <hr/>
     </div>
+</div>
+
+<div class="container">
+    {% for comment in comment_list %}
+        <li>
+        {{ comment.message }} by {{ comment.author }}<br/>
+        작성일시 : {{ comment.created_at }}
+        </li>
+    {% endfor %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" />
+    </form>
+    <hr/>
     <a href="{% url 'blog:post_list' %}" > 글 목록으로 </a>
 </div>
 
