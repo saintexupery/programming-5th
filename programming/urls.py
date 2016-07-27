@@ -21,6 +21,6 @@ from pockemongo import views as pockemongo_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^pokemon/$', pockemongo_views.pockmon_list),
-    url(r'^blog/$', include('blog.urls', namespace='blog')),
-    url(r'^$', lambda request: redirect('/blog/'))
+    url(r'^blog/', include('blog.urls', namespace='blog')),
+    url(r'^$', lambda request: redirect('/blog/')),
 ]
