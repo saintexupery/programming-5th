@@ -9,12 +9,16 @@
 </div>
 
 <div class="container">
-    {% for comment in comment_list %}
-        <li>
-        {{ comment.message }} by {{ comment.author }}<br/>
-        작성일시 : {{ comment.created_at }}
-        </li>
-    {% endfor %}
+    {% if comment_list %}
+        {% for comment in comment_list %}
+            <li>
+            {{ comment.message }} by {{ comment.author }}<br/>
+            작성일시 : {{ comment.created_at }}
+            </li>
+        {% endfor %}
+    {% else %}
+        <li>등록된 댓글이 없어요!</li>
+    {% endif %}
 
     <form action="" method="post">
         {% csrf_token %}
