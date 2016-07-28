@@ -1,7 +1,6 @@
-import re
 from django.db import models
 from django.utils import timezone
-from .validators import lnglat_validator, min_length_validator
+from .validators import lnglat_validator, min_length_validator, MinLengthValidator
 
 
 class Post(models.Model):
