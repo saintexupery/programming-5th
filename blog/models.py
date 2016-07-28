@@ -1,17 +1,16 @@
 import re
 from django.db import models
-from django.forms import ValidationError
 from django.utils import timezone
+from .validators import lnglat_validator, min_length_validator
 
-
-def lnglat_validator(value):
-    if not re.match(r'^(\d+\.?\d*),(\d+\.?\d*)$', value):
-        raise ValidationError('Invalid LngLat Type')
 
 class Post(models.Model):
     author = models.CharField(max_length=20)
-    title = models.CharField(max_length=100, verbose_name='제목')
-    content = models.TextField(help_text='Markdown 문법을 써주세요.')
+    title = models.CharField(max_length=100,
+        validators=[min_length_validator(4)],
+        verbose_name='제목')
+    content = models.TextField(help_text='Markdown 문법을 써주세요.',
+        validators=[min_length_validator(10)])
     # tags = models.CharField(max_length=100, blank=True)
     tag_set = models.ManyToManyField('Tag', blank=True)
     created_at = models.DateTimeField(default=timezone.now)
