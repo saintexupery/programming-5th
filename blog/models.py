@@ -1,15 +1,16 @@
 from django.db import models
 from django.utils import timezone
-from .validators import lnglat_validator, min_length_validator, MinLengthValidator
+from .validators import lnglat_validator, MinLengthValidator, phone_number_validator
+from .fields import PhoneNumberField
 
 
 class Post(models.Model):
     author = models.CharField(max_length=20)
     title = models.CharField(max_length=100,
-        validators=[min_length_validator(4)],
+        validators=[MinLengthValidator(4)],
         verbose_name='제목')
     content = models.TextField(help_text='Markdown 문법을 써주세요.',
-        validators=[min_length_validator(10)])
+        validators=[MinLengthValidator(10)])
     # tags = models.CharField(max_length=100, blank=True)
     tag_set = models.ManyToManyField('Tag', blank=True)
     created_at = models.DateTimeField(default=timezone.now)
@@ -27,4 +28,10 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=20)
+    phone_number = PhoneNumberField()
+
 
