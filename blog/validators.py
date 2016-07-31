@@ -46,7 +46,7 @@ def phone_number_validator(value):
         raise ValidationError('휴대폰 번호를 입력해주세요.')
 
 
-h = open("/Users//Younggi/dev/programming-5th/PostCode/refined_서울특별시.utf8.txt", 'r')
+h = open("./PostCode/refined_서울특별시.utf8.txt", 'r')
 raw_postcode = h.read()
 refined_postcode = raw_postcode.split('\n')
 real_refined_postcode = list(set(refined_postcode))
