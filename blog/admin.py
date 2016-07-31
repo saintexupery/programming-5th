@@ -1,5 +1,5 @@
 from django.contrib import admin
-from blog.models import Post, Comment, Tag, Contact
+from blog.models import Post, Comment, Tag, Contact, PostCode
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -15,3 +15,6 @@ admin.site.register(Tag)
 
 
 admin.site.register(Contact)
+
+
+admin.site.register(PostCode)

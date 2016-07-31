@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from .validators import lnglat_validator, MinLengthValidator, phone_number_validator
-from .fields import PhoneNumberField
+from .fields import PhoneNumberField, PostCodeField
 
 
 class Post(models.Model):
@@ -33,5 +33,16 @@ class Tag(models.Model):
 class Contact(models.Model):
     name = models.CharField(max_length=20)
     phone_number = PhoneNumberField()
+
+
+class PostCode(models.Model):
+    region = models.CharField(max_length=20)
+    post_code = PostCodeField()
+
+    def __str__(self):
+        return self.post_code
+
+
+
 
 

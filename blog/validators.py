@@ -38,16 +38,27 @@ def MaxLengthValidator(object):
 
     def __call__(self, value):
         if len(value) > self.max_length:
-            raise ValidationError('{}글자 이하를 입력해주세요'.format(self.max_length))
+            raise ValidationError('{}글자 이하를 입력해주세요.'.format(self.max_length))
 
 
 def phone_number_validator(value):
-    if not re.match(r'^01[016789][1-9]\d[6, 7]$', value):
-        raise ValidationError('휴대폰 번호를 입력해주세요')
+    if not re.match(r'^01[016789][1-9]\d{6,7}$', value):
+        raise ValidationError('휴대폰 번호를 입력해주세요.')
 
 
+h = open("/Users//Younggi/dev/programming-5th/PostCode/refined_서울특별시.utf8.txt", 'r')
+raw_postcode = h.read()
+refined_postcode = raw_postcode.split('\n')
+real_refined_postcode = list(set(refined_postcode))
+real_refined_postcode[0] = real_refined_postcode[0][1:]
+h.close()
 
+def post_code_validator(value):
+    if not re.match(r'^[0123456]\d{4}$', value):
+        raise ValidationError('알맞은 형태의 우편번호를 입력해주세요.')
 
+    if not value in real_refined_postcode:
+        raise ValidationError('존재하지 않는 우편번호입니다.')
 
 
 
