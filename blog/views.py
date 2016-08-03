@@ -28,3 +28,20 @@ def post_detail(request, pk):
         'comment_list' : comment_list,
         'form' : form,
     })
+
+
+def comment_edit(request, post_pk, comment_pk):
+    comment = Comment.objects.get(post_id=post_pk, pk=comment_pk)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+
+        if form.is_valid():
+            comment = form.save()
+            return redirect('blog:post_detail', post_pk)
+    else:
+        form = CommentForm(instance=comment)
+
+    return render(request, 'blog/comment_edit.html', {
+        'form' : form
+    })
