@@ -1,11 +1,12 @@
 from django.db import models
 from django.utils import timezone
-from .validators import lnglat_validator, MinLengthValidator, phone_number_validator
+from .validators import lnglat_validator, MinLengthValidator, phone_number_validator, ZipCodeValidator
 from .fields import PhoneNumberField, PostCodeField
 
 
 class Post(models.Model):
-    author = models.CharField(max_length=20)
+    author = models.CharField(max_length=20,
+        validators=[ZipCodeValidator(True)])
     title = models.CharField(max_length=100,
         validators=[MinLengthValidator(4)],
         verbose_name='제목')
@@ -43,6 +44,12 @@ class PostCode(models.Model):
         return self.post_code
 
 
+class ZipCode(models.Model):
+    city = models.CharField(max_length=20)
+    road = models.CharField(max_length=20)
+    dong = models.CharField(max_length=20)
+    gu = models.CharField(max_length=20)
+    code = models.CharField(max_length=7)
 
 
 

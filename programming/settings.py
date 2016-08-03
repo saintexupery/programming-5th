@@ -124,3 +124,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+EPOST_API_KEY = os.environ.get('EPOST_API_KEY', '5315606e3fe0e7fe41470021503104')
