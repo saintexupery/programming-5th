@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.core.urlresolvers import reverse
 from .validators import lnglat_validator, MinLengthValidator, phone_number_validator, ZipCodeValidator
 from .fields import PhoneNumberField, PostCodeField
 
@@ -16,6 +17,10 @@ class Post(models.Model):
     tag_set = models.ManyToManyField('Tag', blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     test_field = models.IntegerField(default=10)
+
+    def get_absolute_url(self):
+        return reverse('blog:post_detail', args=[self.pk])
+        #'blog.views.post_detail'이 작동하지 않는 이유는 url의 두 번째 인자가 문자열이 아닌 함수이기 때문이다.
 
 
 class Comment(models.Model):

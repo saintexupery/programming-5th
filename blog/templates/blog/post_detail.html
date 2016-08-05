@@ -14,16 +14,20 @@
     {% empty %}
     <ul>첫번째 댓글을 작성해주세요</ul>
     {% endfor %}-->
-    {% if comment_list %}
-        {% for comment in post.comment_set.all %}
+
+    {% for comment in post.comment_set.all %}
+        {% if comment %}
             <li>
             {{ comment.message }} by {{ comment.author }}<br/>
             작성일시 : {{ comment.created_at }}
+            <a href="{% url 'blog:comment_edit' post.pk comment.pk %}">수정</a>
             </li>
-        {% endfor %}
-    {% else %}
+        {% else %}
         <li>등록된 댓글이 없어요!</li>
-    {% endif %}
+        {% endif %}
+    {% endfor %}
+
+
 
     <form action="" method="post">
         {% csrf_token %}
