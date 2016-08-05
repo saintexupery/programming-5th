@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Comment
 from .forms import CommentForm
@@ -10,8 +11,14 @@ def post_list(request):
     })
 
 def post_detail(request, pk):
-    post = Post.objects.get(pk=pk)
-    comment_list = Comment.objects.filter(post_id=pk)
+    # try:
+    #     post = Post.objects.get(pk=pk) # Post.DoesNotExist 에러가 게시물 삭제시 발생할 수 있다.
+    #     comment_list = Comment.objects.filter(post_id=pk)
+    # except:
+    #     raise Http404
+    # 위와 같이 적는 것은 번거로울 수 있다. 이런 상황에서 제공되는 기능이 get_object_or_404 Function.
+
+    post = get_object_or_404(Post, pk=pk)
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -25,7 +32,6 @@ def post_detail(request, pk):
 
     return render(request, 'blog/post_detail.html', {
         'post' : post,
-        'comment_list' : comment_list,
         'form' : form,
     })
 

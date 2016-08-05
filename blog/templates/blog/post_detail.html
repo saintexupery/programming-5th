@@ -9,8 +9,13 @@
 </div>
 
 <div class="container">
+    <!-- if문 대신에 empty를 사용하는 것이 효율적일수 있다.
+    {% for comment in post.comment_set.all %}
+    {% empty %}
+    <ul>첫번째 댓글을 작성해주세요</ul>
+    {% endfor %}-->
     {% if comment_list %}
-        {% for comment in comment_list %}
+        {% for comment in post.comment_set.all %}
             <li>
             {{ comment.message }} by {{ comment.author }}<br/>
             작성일시 : {{ comment.created_at }}
