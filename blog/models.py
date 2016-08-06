@@ -17,6 +17,7 @@ class Post(models.Model):
     tag_set = models.ManyToManyField('Tag', blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     test_field = models.IntegerField(default=10)
+    photo = models.ImageField(blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('blog:post_detail', args=[self.pk])
