@@ -1,6 +1,12 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
+
+{% if post.photo %}
+<div class="container">
+    <img src="{{ post.photo.url }}" />
+</div>
+{% endif %}
 <div class="container">
     <div class="jumbotron">
         {{ post.title }} <br/>

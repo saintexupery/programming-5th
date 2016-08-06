@@ -1,6 +1,9 @@
 import re
+import os
 import requests
 import xmltodict
+from uuid import uuid4
+from django.utils import timezone
 from django.conf import settings
 from django.forms import ValidationError
 from django.utils.deconstruct import deconstructible
@@ -99,6 +102,16 @@ class ZipCodeValidator(object):
             pass
         else:
             raise ValidationError('[{error_code}] {message}'.format(**error))
+
+
+def get_file_path(instance, filename):
+    name = uuid4().hex
+    extension = os.path.splitext(filename)[-1].lower()
+    return os.path.join(name[:3], name[3:6], name[6:] + extension)
+
+
+
+
 
 
 

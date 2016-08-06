@@ -1,8 +1,11 @@
 from django.db import models
 from django.utils import timezone
+from django.core.files import File
 from django.core.urlresolvers import reverse
-from .validators import lnglat_validator, MinLengthValidator, phone_number_validator, ZipCodeValidator
+from django.db.models.signals import pre_save
+from .validators import lnglat_validator, MinLengthValidator, phone_number_validator, ZipCodeValidator, get_file_path
 from .fields import PhoneNumberField, PostCodeField
+from .utils import square_image, thumbnail
 
 
 class Post(models.Model):
@@ -17,7 +20,7 @@ class Post(models.Model):
     tag_set = models.ManyToManyField('Tag', blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     test_field = models.IntegerField(default=10)
-    photo = models.ImageField(blank=True, null=True)
+    photo = models.ImageField(upload_to=get_file_path, blank=True, null=True)
 
     def get_absolute_url(self):
         return reverse('blog:post_detail', args=[self.pk])
@@ -56,6 +59,20 @@ class ZipCode(models.Model):
     dong = models.CharField(max_length=20)
     gu = models.CharField(max_length=20)
     code = models.CharField(max_length=7)
+
+
+def pre_on_post_save(sender, **kwargs):
+    post = kwargs['instance']
+    if post.photo:
+        max_width=300
+        if post.photo.width > max_width or post.photo.height > max_width:
+            processed_file = thumbnail(post.photo.file, max_width, max_width)
+            post.photo.save(post.photo.name, File(processed_file))
+
+pre_save.connect(pre_on_post_save, sender=Post)
+
+
+
 
 
 
