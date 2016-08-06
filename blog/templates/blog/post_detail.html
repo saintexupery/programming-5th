@@ -1,6 +1,7 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
+{% load bootstrap3 %}
 
 {% if post.photo %}
 <div class="container">
@@ -12,6 +13,11 @@
         {{ post.title }} <br/>
         {{ post.content }} <hr/>
     </div>
+        <form action="" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" />
+        </form>
 </div>
 
 <div class="container">
