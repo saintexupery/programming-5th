@@ -1,4 +1,5 @@
 from django.http import Http404
+from django.contrib import  messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from .models import Post, Comment
@@ -27,6 +28,7 @@ def post_detail(request, pk):
             comment = form.save(commit=False)
             comment.post = get_object_or_404(Post, pk=pk)
             comment.save()
+            messages.success(request, '새 댓글을 저장했습니다.')
             return redirect('blog:post_detail', pk)
     else:
         form = CommentForm()
@@ -46,6 +48,7 @@ def comment_edit(request, post_pk, comment_pk):
 
         if form.is_valid():
             comment = form.save()
+            messages.success(request, '댓글을 수정하였습니다.')
             return redirect(post)
 #            return redirect('blog:post_detail', post_pk)
     else:

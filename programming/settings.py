@@ -126,3 +126,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 EPOST_API_KEY = os.environ.get('EPOST_API_KEY', '5315606e3fe0e7fe41470021503104')
+
+from django.contrib.messages import constants as messages_constants
+MESSAGE_TAGS = {messages_constants.ERROR: 'danger'}
