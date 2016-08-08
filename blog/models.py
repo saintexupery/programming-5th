@@ -20,7 +20,8 @@ class Post(models.Model):
     tag_set = models.ManyToManyField('Tag', blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     test_field = models.IntegerField(default=10)
-    photo = models.ImageField(upload_to=get_file_path, blank=True, null=True)
+    photo = models.ImageField(upload_to=get_file_path, blank=True, null=True) # blank 값이 비어있는 것에 대한 유효성 검사
+    # null은 지정할 일이 거의 없다. null은 python에서 None값. null이 의미 있는 경우에는 ForeignKey에만 있다.
 
     def get_absolute_url(self):
         return reverse('blog:post_detail', args=[self.pk])

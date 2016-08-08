@@ -13,11 +13,11 @@
         {{ post.title }} <br/>
         {{ post.content }} <hr/>
     </div>
-        <form action="" method="post">
+<!--         <form action="" method="post">
         {% csrf_token %}
         {% bootstrap_form form %}
         <input type="submit" />
-        </form>
+        </form> -->
 </div>
 
 <div class="container">
@@ -41,15 +41,24 @@
         {% endif %}
     {% endfor %}
 
+    <div class="container" >
+        <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            {{ form2.as_table }}
+        </table>
+        <input type="submit" />
+        </form>
+    </div>
 
 
-    <form action="" method="post" enctype="multipart/form-data">
+<!--     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
             {{ form.as_table }}
         </table>
         <input type="submit" />
-    </form>
+    </form> -->
     <hr/>
     <a href="{% url 'blog:post_list' %}" > 글 목록으로 </a>
 </div>

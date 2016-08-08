@@ -3,7 +3,7 @@ from django.contrib import  messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from .models import Post, Comment
-from .forms import CommentForm
+from .forms import CommentModelForm, CommentForm
 
 def post_list(request):
     post_list = Post.objects.all()
@@ -23,7 +23,8 @@ def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
     if request.method == 'POST':
-        form = CommentForm(request.POST, request.FILES)
+        form = CommentModelForm(request.POST, request.FILES)
+        form2 = CommentForm(request.POST, request.FILES)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = get_object_or_404(Post, pk=pk)
@@ -31,12 +32,22 @@ def post_detail(request, pk):
             # print(request.POST) : 커맨드에 프린트가 됨.
             messages.success(request, '새 댓글을 저장했습니다.')
             return redirect('blog:post_detail', pk)
+        if form2.is_valid():
+            formInstance = CommentFrom(post=request.post)
+            formInstance.author = form2.cleaned_data['author']
+            formInstance.message = form2.cleaned_data['message']
+            formInstance.jjal = form2.cleaned_data['jjal']
+            formInstance.save()
+            return redirect('/')
+
     else:
-        form = CommentForm()
+        form = CommentModelForm()
+        form2 = CommentForm()
 
     return render(request, 'blog/post_detail.html', {
         'post' : post,
         'form' : form,
+        'form2' : form2,
     })
 
 
@@ -45,7 +56,7 @@ def comment_edit(request, post_pk, comment_pk):
     comment = Comment.objects.get(post_id=post_pk, pk=comment_pk)
 
     if request.method == 'POST':
-        form = CommentForm(request.POST, instance=comment)
+        form = CommentModelForm(request.POST, instance=comment)
 
         if form.is_valid():
             comment = form.save()
@@ -53,7 +64,7 @@ def comment_edit(request, post_pk, comment_pk):
             return redirect(post)
 #            return redirect('blog:post_detail', post_pk)
     else:
-        form = CommentForm(instance=comment)
+        form = CommentModelForm(instance=comment)
 
     return render(request, 'blog/comment_edit.html', {
         'form' : form,
