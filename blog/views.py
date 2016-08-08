@@ -23,11 +23,12 @@ def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
     if request.method == 'POST':
-        form = CommentForm(request.POST)
+        form = CommentForm(request.POST, request.FILES)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = get_object_or_404(Post, pk=pk)
             comment.save()
+            # print(request.POST) : 커맨드에 프린트가 됨.
             messages.success(request, '새 댓글을 저장했습니다.')
             return redirect('blog:post_detail', pk)
     else:

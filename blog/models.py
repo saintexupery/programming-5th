@@ -30,6 +30,7 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(Post)
     message = models.TextField()
+    jjal = models.ImageField(blank=True)
     author = models.CharField(max_length=20)
 
 
