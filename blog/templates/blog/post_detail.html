@@ -29,11 +29,13 @@
 
     {% for comment in post.comment_set.all %}
         {% if comment %}
+            {% if comment.jjal %}
             <li>
+            <img src="{{ comment.jjal.url}}" style="width: 60px; height: 60px;" />
             {{ comment.message }} by {{ comment.author }}<br/>
-            작성일시 : {{ comment.created_at }}
             <a href="{% url 'blog:comment_edit' post.pk comment.pk %}">수정</a>
             </li>
+            {% endif %}
         {% else %}
         <li>등록된 댓글이 없어요!</li>
         {% endif %}
