@@ -63,13 +63,20 @@ class ZipCode(models.Model):
 
 def pre_on_post_save(sender, **kwargs):
     post = kwargs['instance']
-    if post.photo:
+    if post.photo: # 사진이 저장된 경로가 존재한다면
+        # post.photo : 이미지 저장 경로
+        # post.photo.name : 이미지 파일명
+        # post.photo.path : 이미지 저장 absolute url
+        # post.photo.url : 이미지 url
+        # post.photo.file : 경로에 있는 파일에 대하여 읽고, 쓸 수 있는 기능을 제공
+        # post.photo.with (ImageField only)
+        # post.photo.height (ImageField only)
         max_width=300
         if post.photo.width > max_width or post.photo.height > max_width:
             processed_file = thumbnail(post.photo.file, max_width, max_width)
             post.photo.save(post.photo.name, File(processed_file))
 
-pre_save.connect(pre_on_post_save, sender=Post)
+pre_save.connect(pre_on_post_save, sender=Post) # Post모델이 호출되고 저장하기 직전에 on_pre_save라는 함수를 호출하겠다.
 
 
 

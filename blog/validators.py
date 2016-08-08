@@ -107,7 +107,9 @@ class ZipCodeValidator(object):
 def get_file_path(instance, filename):
     name = uuid4().hex
     extension = os.path.splitext(filename)[-1].lower()
-    return os.path.join(name[:3], name[3:6], name[6:] + extension)
+    # splitext = split extension, 경로와 확장자를 나누어 튜플로 반환)
+    # 경로를 반환할 때 파일의 확장자는 변하면 안되기 때문에 이 메소드를 사용.
+    return os.path.join(name[:3], name[3:6], name[6:] + extension) # name[:3] + '/' + name[3:6] + '/' + name[6:] + 확장자. os.path.join에서는 ,는 /로 연결되고 +는 그대로 뒤에 이어 붙인다.
 
 
 
