@@ -37,7 +37,6 @@ def post_detail(request, pk):
             formInstance.author = form2.cleaned_data['author']
             formInstance.message = form2.cleaned_data['message']
             formInstance.jjal = form2.cleaned_data['jjal']
-            formInstance.save()
             return redirect('/')
 
     else:
