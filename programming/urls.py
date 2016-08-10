@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^pokemon/$', pockemongo_views.pockmon_list),
     url(r'^blog/', include('blog.urls', namespace='blog')),
+    url(r'^accounts/', include('accounts.urls')), # accounts는 auth앱과 연동시킬 것이기 때문에 namespace를 지정하지 않는다.
     url(r'^$', lambda request: redirect('/blog/')),
 ]
 

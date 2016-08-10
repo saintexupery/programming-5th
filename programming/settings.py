@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'pockemongo',
     'shop',
     'webtoon',
+    'accounts',
 ]
 
 MIDDLEWARE_CLASSES = [
