@@ -1,16 +1,16 @@
-from django.db import models
-from django.utils import timezone
+from django.conf import settings
 from django.core.files import File
 from django.core.urlresolvers import reverse
 from django.db.models.signals import pre_save
+from django.db import models
+from django.utils import timezone
 from .validators import lnglat_validator, MinLengthValidator, phone_number_validator, ZipCodeValidator, get_file_path
 from .fields import PhoneNumberField, PostCodeField
 from .utils import square_image, thumbnail
 
 
 class Post(models.Model):
-    author = models.CharField(max_length=20,
-        validators=[ZipCodeValidator(True)])
+    author = models.CharField(max_length=50) # ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=100,
         validators=[MinLengthValidator(4)],
         verbose_name='제목')
