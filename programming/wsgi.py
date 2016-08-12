@@ -11,6 +11,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "programming.settings")
+# 실서비스 단계에서는 wsgi부터 시작, 개발환경에서는 manage.py에서 시작
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "programming.settings.prod")
 
 application = get_wsgi_application()
